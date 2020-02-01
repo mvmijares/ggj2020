@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
+    [SerializeField]
     private GameManager gm_instance;
     private float mouseX;
     private float mouseY;
@@ -14,16 +15,12 @@ public class PlayerCamera : MonoBehaviour
     private Transform player;
     
     // Start is called before the first frame update
-    private void Awake()
+    private void Start()
     {
         gm_instance = GameManager.instance;
         player = transform.parent; //Assuming the parent is always the player
-    }
-    void Start()
-    {
         Cursor.lockState = CursorLockMode.Locked;
     }
-
     // Update is called once per frame
     void Update()
     {

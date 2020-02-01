@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     #region Data
+    [SerializeField]
     GameManager gm_instance;
 
     [SerializeField]
@@ -21,13 +22,9 @@ public class Player : MonoBehaviour
     Transform carryObject;
     public float throwPower;
     #endregion
-    private void Awake()
-    {
-        gm_instance = GameManager.instance;   
-    }
     private void Start()
     {
-        
+        gm_instance = GameManager.instance;   
     }
     private void Update()
     {

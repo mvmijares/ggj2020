@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     #region Data
 
     public static GameManager instance = null; //Singleton
-    private int score;
+    private int score = 0;
     private int timer;
     public int maxTime;
 
@@ -53,8 +53,13 @@ public class GameManager : MonoBehaviour
             return null;
         }
     }
+
+    public void AddScore(int value)
+    {
+        score += value;
+    }
     private void Update()
     {
-        
+        Debug.Log("Score is " + score);
     }
 }
