@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
     public LayerMask objectLayerMask;
 
     public Transform tipOfHand;
+
+    Transform carryObject;
+    public float throwPower;
     #endregion
     private void Awake()
     {
@@ -34,6 +37,8 @@ public class Player : MonoBehaviour
 
     private void ObjectPickup()
     {
+        Transform cam_transform = gm_instance.GetPlayerCamera().transform;
+
         if (keyboard)
         {
             if (Input.GetMouseButtonDown(0))
@@ -42,15 +47,23 @@ public class Player : MonoBehaviour
                 {
                     RaycastHit hit;
 
-                    Transform cam_transform = gm_instance.GetPlayerCamera().transform;
+                    
 
                     if (Physics.Raycast(cam_transform.position, cam_transform.forward, out hit, pickupDistance, objectLayerMask))
                     {
+                       
                         objectInHand = true;
                         CreateObjectClone(hit.transform);
+                        Destroy(hit.transform.gameObject);
                         Debug.Log("Raycast has hit object");
                     }
-
+                }
+                else
+                {
+                    objectInHand = false;
+                    carryObject.SetParent(null);
+                    carryObject.GetComponent<Item>().FreezeRigidbody(false);
+                    carryObject.GetComponent<Item>().ThrowObject(cam_transform.forward, throwPower);
                 }
             }
         }
@@ -60,7 +73,13 @@ public class Player : MonoBehaviour
     {
 
         Transform clone = Instantiate(reference, tipOfHand.position, reference.rotation);
+        carryObject = clone;
+        if (clone.GetComponent<Item>()) 
+        {
+            clone.GetComponent<Item>().FreezeRigidbody(true);
+        }
         clone.parent = tipOfHand;
+
     }
 
     private void PlayerInput()
