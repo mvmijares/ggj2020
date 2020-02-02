@@ -62,20 +62,10 @@ public class ShoppingCart : MonoBehaviour
         {
             int num = RandomizeNewItem();
             Transform clone = null;
-            switch (num)
+            if (num > 0)
             {
-                case 1:
-                {
-                    clone = Instantiate(prefabList[0].transform, itemSpawn.position, prefabList[0].transform.rotation);
-                    clone.parent = this.transform;
-                    break;
-                }
-                case 2:
-                {
-                    clone = Instantiate(prefabList[1].transform, itemSpawn.position, prefabList[0].transform.rotation);
-                    clone.parent = this.transform;
-                    break;
-                }
+                clone = Instantiate(prefabList[num - 1].transform, itemSpawn.position, prefabList[num - 1].transform.rotation);
+                clone.parent = this.transform;
             }
             if(clone == null)
             {

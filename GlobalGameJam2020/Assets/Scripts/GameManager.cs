@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     private float startTimer = 0.0f;
     public float startTime = 3f;
     public bool start = false;
-
+    [SerializeField]
     private float gameTimer = 0.0f;
     public float maxTime;
 
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     #region User Interface
 
     private Transform scoreTransform;
-
+    
     #endregion
     private void Awake()
     {
