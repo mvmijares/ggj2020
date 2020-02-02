@@ -31,6 +31,8 @@ public class Section : MonoBehaviour
                     if (gm_instance)
                         gm_instance.AddScore(sectionScoreValue);
 
+                    gm_instance.PlayHitEffect();
+
                 }
             }
         }
