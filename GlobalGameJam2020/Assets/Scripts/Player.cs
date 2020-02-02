@@ -38,11 +38,12 @@ public class Player : MonoBehaviour
         PlayerInput();
         ObjectPickup();
 
-        Physics.IgnoreLayerCollision(9, 8);
+        
     }
     private void FixedUpdate()
     {
         PlayerMovement();
+        Physics.IgnoreLayerCollision(9, 8);
     }
     private void ObjectPickup()
     {
