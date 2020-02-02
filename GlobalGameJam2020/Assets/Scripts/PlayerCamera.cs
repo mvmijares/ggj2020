@@ -33,7 +33,7 @@ public class PlayerCamera : MonoBehaviour
         mouseY = Input.GetAxisRaw("Mouse Y") * camera_sensitivity * Time.deltaTime;
 
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        xRotation = Mathf.Clamp(xRotation, -50f, 50f);
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         playerHand.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
