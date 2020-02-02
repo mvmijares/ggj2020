@@ -18,7 +18,7 @@ public class EndScreen : MonoBehaviour
 
     public void OnMenuButtonClicked()
     {
-        SceneManager.LoadScene("Menu");s
+        SceneManager.LoadScene("Menu");
     }
 
 
