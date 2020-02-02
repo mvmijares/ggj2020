@@ -204,7 +204,7 @@ public class GameManager : MonoBehaviour
                 }
                 if(gameTime <= 0.0f)
                 {
-                    Debug.Log("Game has finished!!");
+                    SceneManager.LoadScene("End Screen");
                 }
 
                 if (gameTimerTransform)
