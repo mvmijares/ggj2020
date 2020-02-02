@@ -51,6 +51,10 @@ public class Player : MonoBehaviour
 
                         objectInHand = true;
                         CreateObjectClone(hit.transform);
+                        if (hit.transform.GetComponent<Item>().shoppingCartItem)
+                        {
+                            gm_instance.GetShoppingCart().RemoveShoppingCartItem();
+                        }
                         Destroy(hit.transform.gameObject);
                         Debug.Log("Raycast has hit object");
                     }

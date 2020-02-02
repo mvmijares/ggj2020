@@ -13,6 +13,7 @@ public class Item : MonoBehaviour
     Rigidbody rb;
     public ItemType type;
     public bool itemUsed;
+    public bool shoppingCartItem = false;
     private float destroyTimer = 0f;
 
     #endregion

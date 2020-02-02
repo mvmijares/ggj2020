@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public SceneState sceneState;
     public static GameManager instance = null; //Singleton
     private int score = 0;
-
+    [SerializeField]
     private float startTimer = 0.0f;
     public float startTime = 3f;
     public bool start = false;
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
      */
     public Transform playerCamera;
     public Transform player;
-
+    public Transform shoppingCart;
     #region User Interface
 
     private Transform scoreTransform;
@@ -54,7 +54,10 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         switch (scene.name)
@@ -85,23 +88,7 @@ public class GameManager : MonoBehaviour
         if (score)
             scoreTransform = score.transform;
 
-        if (!start)
-        {
-            startTimer += Time.deltaTime;
-            if (startTimer >= startTime)
-            {
-                start = true;
-                startTimer = 0.0f;
-            }
-        }
-        else
-        {
-            gameTimer += Time.deltaTime;
-            if (gameTimer >= maxTime)
-            {
-                Debug.Log("Game has finished!!");
-            }
-        }
+       
        
     }
     public PlayerCamera GetPlayerCamera()
@@ -127,7 +114,18 @@ public class GameManager : MonoBehaviour
             return null;
         }
     }
-
+    public ShoppingCart GetShoppingCart()
+    {
+        if (shoppingCart)
+        {
+            return shoppingCart.GetComponent<ShoppingCart>();
+        }
+        else
+        {
+            Debug.Log("ShoppingCart script component not found.");
+            return null;
+        }
+    }
     public void AddScore(int value)
     {
         score += value;
@@ -139,7 +137,26 @@ public class GameManager : MonoBehaviour
             if(scoreTransform)
                 scoreTransform.GetChild(0).GetComponent<Text>().text = score.ToString();
 
-        }
+            if (!start)
+            {
+                startTimer += Time.deltaTime;
 
+                if (startTimer >= startTime)
+                {
+                    start = true;
+                    startTimer = 0.0f;
+                }
+
+            }
+            else
+            {
+                gameTimer += Time.deltaTime;
+                if (gameTimer >= maxTime)
+                {
+                    Debug.Log("Game has finished!!");
+                }
+            }
+        }
+        
     }
 }
