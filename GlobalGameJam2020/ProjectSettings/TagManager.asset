@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Score Text
   - Game Timer Text
+  - Player Camera
+  - Shopping Cart
   layers:
   - Default
   - TransparentFX

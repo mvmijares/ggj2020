@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 549298615452888073}
-  - component: {fileID: 549298615452888075}
   - component: {fileID: 549298615452888072}
+  - component: {fileID: 549298615452888075}
   - component: {fileID: 549298615452888074}
   m_Layer: 8
   m_Name: Grapes_Prefab
@@ -28,12 +28,27 @@ Transform:
   m_GameObject: {fileID: 549298615452888070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.69, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4820317116018066876}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &549298615452888072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549298615452888070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1715bfda051e15e4b987a6f4a7536f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 6
+  itemUsed: 0
+  shoppingCartItem: 0
 --- !u!65 &549298615452888075
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -47,21 +62,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 1, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &549298615452888072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549298615452888070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1715bfda051e15e4b987a6f4a7536f9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  itemUsed: 0
-  shoppingCartItem: 0
 --- !u!54 &549298615452888074
 Rigidbody:
   m_ObjectHideFlags: 0

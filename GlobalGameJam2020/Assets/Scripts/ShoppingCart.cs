@@ -74,7 +74,8 @@ public class ShoppingCart : MonoBehaviour
             else
             {
                 
-                item = clone; 
+                item = clone;
+                item.GetComponent<Item>().FreezeRigidbody(true);
                 item.GetComponent<Item>().shoppingCartItem = true;
             }
         }

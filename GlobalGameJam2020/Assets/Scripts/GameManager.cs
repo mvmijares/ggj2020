@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public enum SceneState
 {
     None, Menu, Help, Game, End
+
 }
 public class GameManager : MonoBehaviour
 {
@@ -15,11 +16,9 @@ public class GameManager : MonoBehaviour
     public SceneState sceneState;
     public static GameManager instance = null; //Singleton
     private int score = 0;
-    [SerializeField]
     private float startTimer = 0.0f;
     public float startTime = 3f;
     public bool start = false;
-    [SerializeField]
     private float gameTime = 0.0f;
     public float maxTime;
 
@@ -33,9 +32,22 @@ public class GameManager : MonoBehaviour
     public Transform player;
     public Transform shoppingCart;
     #region User Interface
-
+    [Header("User Interface")]
     private Transform scoreTransform;
     private Transform gameTimerTransform;
+
+    #endregion
+
+    #region Main Menu
+
+
+    #endregion
+
+    #region Audio
+    [Header("Audio")]
+    AudioSource audioSource;
+    public AudioClip menuAudio;
+    public AudioClip gameAudio;
 
     #endregion
     private void Awake()
@@ -49,6 +61,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -65,7 +79,12 @@ public class GameManager : MonoBehaviour
         {
             case "Development":
                 {
-                    OnDevelopmentScene();
+                    //OnDevelopmentScene();
+                    break;
+                }
+            case "Main Menu":
+                {
+                    OnMainMenuScene();
                     break;
                 }
             case "Game":
@@ -73,20 +92,39 @@ public class GameManager : MonoBehaviour
                     OnGameScene();
                     break;
                 }
+
         }
     }
 
-    private void OnGameScene()
+    private void OnMainMenuScene()
     {
-
+        sceneState = SceneState.Menu;
+        audioSource.clip = menuAudio;
+        audioSource.Play();
     }
 
-    private void OnDevelopmentScene()
+    private void OnGameScene()
     {
         sceneState = SceneState.Game;
         GameObject score = GameObject.FindGameObjectWithTag("Score Text");
         GameObject gameTimer = GameObject.FindGameObjectWithTag("Game Timer Text");
 
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        GameObject playerCameraObject = GameObject.FindGameObjectWithTag("Player Camera");
+        GameObject shoppingCartObject = GameObject.FindGameObjectWithTag("Shopping Cart");
+
+        if (playerObject)
+        {
+            player = playerObject.transform;
+        }
+        if (playerCameraObject)
+        {
+            playerCamera = playerCameraObject.transform;
+        }
+        if (shoppingCartObject)
+        {
+            shoppingCart = shoppingCartObject.transform;
+        }
         if (score)
             scoreTransform = score.transform;
 
@@ -94,6 +132,9 @@ public class GameManager : MonoBehaviour
             gameTimerTransform = gameTimer.transform;
 
         gameTime = maxTime;
+
+        audioSource.clip = gameAudio;
+        audioSource.Play();
        
     }
     public PlayerCamera GetPlayerCamera()
@@ -156,6 +197,11 @@ public class GameManager : MonoBehaviour
             else
             {
                 gameTime -= Time.deltaTime;
+                if(gameTime <= 15.0f)
+                {
+                    if(audioSource.pitch < 1.5f)
+                        audioSource.pitch += Time.deltaTime;
+                }
                 if(gameTime <= 0.0f)
                 {
                     Debug.Log("Game has finished!!");
