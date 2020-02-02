@@ -8,9 +8,11 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance = null; //Singleton
     private int score = 0;
-    private int timer;
-    public int maxTime;
+    private float imer;
+    public float maxTime;
 
+    [Tooltip("Time it takes for item to get destroyed after being used")]
+    public float itemTimeOut = 10f;
     #endregion
     /* Will change this layer once, scene transitioning is implemented
      * 

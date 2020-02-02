@@ -17,16 +17,21 @@ public class Section : MonoBehaviour
         gm_instance = GameManager.instance;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
-        if (other.GetComponent<Item>())
+        if (other.transform.GetComponent<Item>())
         {
-            if(other.GetComponent<Item>().type == sectionType)
+            Item component = other.transform.GetComponent<Item>();
+            if (!component.itemUsed)
             {
-                if(gm_instance)
-                    gm_instance.AddScore(sectionScoreValue);
+                if (component.type == sectionType)
+                {
+                    component.itemUsed = true;
 
-                other.GetComponent<Item>().FreezeRigidbody(true);
+                    if (gm_instance)
+                        gm_instance.AddScore(sectionScoreValue);
+
+                }
             }
         }
     }

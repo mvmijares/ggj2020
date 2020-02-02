@@ -44,11 +44,11 @@ public class Player : MonoBehaviour
                 {
                     RaycastHit hit;
 
-                    
-
                     if (Physics.Raycast(cam_transform.position, cam_transform.forward, out hit, pickupDistance, objectLayerMask))
                     {
-                       
+                        if (hit.transform.GetComponent<Item>().itemUsed)
+                            return;
+
                         objectInHand = true;
                         CreateObjectClone(hit.transform);
                         Destroy(hit.transform.gameObject);
