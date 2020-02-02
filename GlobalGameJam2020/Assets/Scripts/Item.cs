@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ItemType
 {
-    None, Steak, Ham, Lobster, Squid, Grapes
+    None, Steak, Ham, Lobster, Squid, Grapes, Bananas, Apple, Corn, Tomato, Carrot, Pepper
 }
 public class Item : MonoBehaviour
 {

@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public float startTime = 3f;
     public bool start = false;
     [SerializeField]
-    private float gameTimer = 0.0f;
+    private float gameTime = 0.0f;
     public float maxTime;
 
     [Tooltip("Time it takes for item to get destroyed after being used")]
@@ -35,7 +35,8 @@ public class GameManager : MonoBehaviour
     #region User Interface
 
     private Transform scoreTransform;
-    
+    private Transform gameTimerTransform;
+
     #endregion
     private void Awake()
     {
@@ -84,11 +85,15 @@ public class GameManager : MonoBehaviour
     {
         sceneState = SceneState.Game;
         GameObject score = GameObject.FindGameObjectWithTag("Score Text");
+        GameObject gameTimer = GameObject.FindGameObjectWithTag("Game Timer Text");
 
         if (score)
             scoreTransform = score.transform;
 
-       
+        if (gameTimer)
+            gameTimerTransform = gameTimer.transform;
+
+        gameTime = maxTime;
        
     }
     public PlayerCamera GetPlayerCamera()
@@ -150,10 +155,18 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                gameTimer += Time.deltaTime;
-                if (gameTimer >= maxTime)
+                gameTime -= Time.deltaTime;
+                if(gameTime <= 0.0f)
                 {
                     Debug.Log("Game has finished!!");
+                }
+
+                if (gameTimerTransform)
+                {
+                    string minutes = Mathf.Floor(gameTime / 60).ToString("00");
+                    string seconds = (gameTime % 60).ToString("00");
+
+                    gameTimerTransform.GetChild(0).GetComponent<Text>().text = string.Format("{0}:{1}", minutes, seconds);
                 }
             }
         }
