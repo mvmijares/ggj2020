@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     #region Data
     [SerializeField]
     GameManager gm_instance;
-
+    Rigidbody rb;
     [SerializeField]
     private bool objectInHand = false;
 
@@ -21,17 +21,29 @@ public class Player : MonoBehaviour
 
     Transform carryObject;
     public float throwPower;
+
+    private Vector3 inputVector;
+    private float inputX;
+    private float inputZ;
+
     #endregion
     private void Start()
     {
-        gm_instance = GameManager.instance;   
+        gm_instance = GameManager.instance;
+
+        rb = GetComponent<Rigidbody>();
     }
     private void Update()
     {
         PlayerInput();
         ObjectPickup();
-    }
 
+        Physics.IgnoreLayerCollision(9, 8);
+    }
+    private void FixedUpdate()
+    {
+        PlayerMovement();
+    }
     private void ObjectPickup()
     {
         Transform cam_transform = gm_instance.GetPlayerCamera().transform;
@@ -88,21 +100,32 @@ public class Player : MonoBehaviour
     {
         if (keyboard)
         {
-            if (Input.GetKey(KeyCode.W))
-            {
-                transform.Translate(Vector3.forward * Time.deltaTime * speed);
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                transform.Translate(-Vector3.forward * Time.deltaTime * speed);
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                transform.Translate(Vector3.right* Time.deltaTime * speed);
-            }
-            if (Input.GetKey(KeyCode.A)){
-                transform.Translate(-Vector3.right * Time.deltaTime * speed);
-            }
+            inputVector = new Vector3(Input.GetAxisRaw("Horizontal") * 10, 0, Input.GetAxisRaw("Vertical") * 10);
+
+            //if (Input.GetKey(KeyCode.W))
+            //{
+            //    transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            //}
+            //if (Input.GetKey(KeyCode.S))
+            //{
+            //    transform.Translate(-Vector3.forward * Time.deltaTime * speed);
+            //}
+            //if (Input.GetKey(KeyCode.D))
+            //{
+            //    transform.Translate(Vector3.right* Time.deltaTime * speed);
+            //}
+            //if (Input.GetKey(KeyCode.A)){
+            //    transform.Translate(-Vector3.right * Time.deltaTime * speed);
+            //}
         }
+    }
+
+    private void PlayerMovement()
+    {
+        Vector3 forward = transform.forward;
+        Vector3 right = transform.right;
+
+        rb.velocity = (forward * inputVector.z) + (right * inputVector.x);
+
     }
 }

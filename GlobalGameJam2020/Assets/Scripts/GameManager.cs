@@ -13,6 +13,7 @@ public enum SceneState
 public class GameManager : MonoBehaviour
 {
     #region Data
+    [Header("Game Data")]
     public SceneState sceneState;
     public static GameManager instance = null; //Singleton
     private int score = 0;
@@ -24,30 +25,20 @@ public class GameManager : MonoBehaviour
 
     [Tooltip("Time it takes for item to get destroyed after being used")]
     public float itemTimeOut = 10f;
-    #endregion
-    /* Will change this layer once, scene transitioning is implemented
-     * 
-     */
+
     public Transform playerCamera;
     public Transform player;
     public Transform shoppingCart;
-    #region User Interface
+
     [Header("User Interface")]
-    private Transform scoreTransform;
-    private Transform gameTimerTransform;
+    [SerializeField] private Transform scoreTransform;
+    [SerializeField] private Transform gameTimerTransform;
 
-    #endregion
-
-    #region Main Menu
-
-
-    #endregion
-
-    #region Audio
     [Header("Audio")]
-    AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
     public AudioClip menuAudio;
     public AudioClip gameAudio;
+    public AudioClip soundEffect;
 
     #endregion
     private void Awake()
@@ -75,6 +66,8 @@ public class GameManager : MonoBehaviour
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        audioSource.pitch = 1f;
+
         switch (scene.name)
         {
             case "Development":
@@ -92,8 +85,19 @@ public class GameManager : MonoBehaviour
                     OnGameScene();
                     break;
                 }
+            case "End Screen":
+                {
+                    OnEndScreenScene();
+                    break;
+                }
 
         }
+    }
+
+    private void OnEndScreenScene()
+    {
+        sceneState = SceneState.End;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     private void OnMainMenuScene()
@@ -175,6 +179,10 @@ public class GameManager : MonoBehaviour
     public void AddScore(int value)
     {
         score += value;
+    }
+    public void PlayHitEffect()
+    {
+        audioSource.PlayOneShot(soundEffect);
     }
     private void Update()
     {
