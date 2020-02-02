@@ -65,3 +65,10 @@ crashlytics-build.properties
 *.meta
 #But not source file with postfix. which is everything but a folder
 !*.*.meta
+
+[merge]
+tool = unityyamlmerge
+
+[mergetool "unityyamlmerge"]
+trustExitCode = false
+cmd = 'C:\Program Files\Unity\Hub\Editor\2019.1.12f1\Editor\Data\Tools\YAMLMerge.exe' merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
