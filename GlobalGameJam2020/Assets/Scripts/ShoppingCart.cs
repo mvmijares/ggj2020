@@ -6,6 +6,7 @@ using UnityEngine;
 public class ShoppingCart : MonoBehaviour
 {
     #region Data
+    public Transform itemSpawn;
     GameManager gm_instance;
     public int maxNumItems;
     bool isFull;
