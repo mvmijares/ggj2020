@@ -10,10 +10,11 @@ public class ShoppingCart : MonoBehaviour
     GameManager gm_instance;
     public int maxNumItems;
     bool isFull;
+    public List<Transform> prefabList;
     List<Item> itemList;
     Queue<ItemType> itemQueue;
     public Transform item;
-
+    
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -51,16 +52,17 @@ public class ShoppingCart : MonoBehaviour
             {
                 case ItemType.Steak:
                 {
-
+                    
                     break;
                 }
+                
             }
         }
     }
 
     private ItemType RandomizeNewItem()
     {
-        ItemType newType = (ItemType)UnityEngine.Random.Range(0, Enum.GetNames(typeof(ItemType)).Length);
+        ItemType newType = (ItemType)UnityEngine.Random.Range(1, Enum.GetNames(typeof(ItemType)).Length);
 
         return newType;
     }
