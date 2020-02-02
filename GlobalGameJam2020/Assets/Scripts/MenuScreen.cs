@@ -17,6 +17,10 @@ public class MenuScreen : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
+    public void OnHelpButtonClicked()
+    {
+        SceneManager.LoadScene("Help Menu");
+    }
     public void OnQuitButtonClicked()
     {
         Application.Quit();
