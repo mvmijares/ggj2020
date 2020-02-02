@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ItemType
 {
-    None, Bananas, Apples, Steak, Ham
+    None, Steak, Ham, Lobster, Squid, Grapes
 }
 public class Item : MonoBehaviour
 {
@@ -13,6 +13,7 @@ public class Item : MonoBehaviour
     Rigidbody rb;
     public ItemType type;
     public bool itemUsed;
+    public bool shoppingCartItem = false;
     private float destroyTimer = 0f;
 
     #endregion
@@ -32,6 +33,7 @@ public class Item : MonoBehaviour
     }
     public void ThrowObject(Vector3 force, float power)
     {
+        Physics.IgnoreCollision(this.GetComponent<Collider>(), gm_instance.GetShoppingCart().item.GetComponent<Collider>());
         rb.AddForce(force * power);
     }
 
@@ -39,6 +41,7 @@ public class Item : MonoBehaviour
     {
         if (itemUsed)
         {
+            GetComponent<BoxCollider>().isTrigger = true;
             destroyTimer += Time.deltaTime;
             if(destroyTimer >= gm_instance.itemTimeOut)
             {
@@ -46,4 +49,10 @@ public class Item : MonoBehaviour
             }
         }
     }
+
+    private void FixedUpdate()
+    {
+        
+    }
+
 }

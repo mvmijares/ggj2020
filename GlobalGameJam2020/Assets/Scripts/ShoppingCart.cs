@@ -8,12 +8,14 @@ public class ShoppingCart : MonoBehaviour
     #region Data
     public Transform itemSpawn;
     GameManager gm_instance;
-    public int maxNumItems;
-    bool isFull;
-    List<Item> itemList;
+    public int maxNumItems = 1;
+    int numPrefabs;
+    bool isFull = false;
+    public List<Transform> prefabList;
     Queue<ItemType> itemQueue;
     public Transform item;
 
+    float distanceFromCart = 1; // if item is too far from the cart, reset position;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -21,7 +23,7 @@ public class ShoppingCart : MonoBehaviour
         gm_instance = GameManager.instance;
 
         itemQueue = new Queue<ItemType>();
-        itemList = new List<Item>();
+        numPrefabs = prefabList.Count;
     }
 
     // Update is called once per frame
@@ -29,39 +31,65 @@ public class ShoppingCart : MonoBehaviour
     {
         if (gm_instance.start)
         {
+           
             if (!isFull)
             {
                 SpawnNewItem();
+            }
+        }
+
+        //Error checking
+
+        if(item != null)
+        {
+            float distance = (item.position - itemSpawn.position).magnitude;
+            if(distance >= distanceFromCart)
+            {
+                item.position = itemSpawn.position;
+                item.GetComponent<Rigidbody>().velocity = Vector3.zero;
             }
         }
     }
 
     private void SpawnNewItem()
     {
-        if(itemList.Count == maxNumItems)
+        if(item != null)
         {
             isFull = true;
             return;
         }
         else
         {
-            ItemType type = RandomizeNewItem();
-
-            switch (type)
+            int num = RandomizeNewItem();
+            Transform clone = null;
+            if (num > 0)
             {
-                case ItemType.Steak:
-                {
-
-                    break;
-                }
+                clone = Instantiate(prefabList[num - 1].transform, itemSpawn.position, prefabList[num - 1].transform.rotation);
+                clone.parent = this.transform;
+            }
+            if(clone == null)
+            {
+                Debug.Log("Randomizer did not find prefab that matched");
+            }
+            else
+            {
+                
+                item = clone; 
+                item.GetComponent<Item>().shoppingCartItem = true;
             }
         }
     }
 
-    private ItemType RandomizeNewItem()
+    private int RandomizeNewItem()
     {
-        ItemType newType = (ItemType)UnityEngine.Random.Range(0, Enum.GetNames(typeof(ItemType)).Length);
+        Debug.Log("Number of prefabs is" + numPrefabs);
+        int randomNum = UnityEngine.Random.Range(0, numPrefabs + 1);
 
-        return newType;
+        return randomNum;
+    }
+    public void RemoveShoppingCartItem()
+    {
+        isFull = false;
+        item = null;
     }
 }

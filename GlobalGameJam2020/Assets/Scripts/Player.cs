@@ -51,16 +51,21 @@ public class Player : MonoBehaviour
 
                         objectInHand = true;
                         CreateObjectClone(hit.transform);
+                        if (hit.transform.GetComponent<Item>().shoppingCartItem)
+                        {
+                            gm_instance.GetShoppingCart().RemoveShoppingCartItem();
+                        }
                         Destroy(hit.transform.gameObject);
-                        Debug.Log("Raycast has hit object");
                     }
                 }
                 else
                 {
                     objectInHand = false;
                     carryObject.SetParent(null);
+                    
                     carryObject.GetComponent<Item>().FreezeRigidbody(false);
                     carryObject.GetComponent<Item>().ThrowObject(cam_transform.forward, throwPower);
+
                 }
             }
         }
