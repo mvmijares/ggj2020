@@ -16,4 +16,9 @@ public class MenuScreen : MonoBehaviour
     {
         SceneManager.LoadScene("Game");
     }
+
+    public void OnQuitButtonClicked()
+    {
+        Application.Quit();
+    }
 }

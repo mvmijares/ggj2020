@@ -98,10 +98,21 @@ public class GameManager : MonoBehaviour
     {
         sceneState = SceneState.End;
         Cursor.lockState = CursorLockMode.None;
+
+        GameObject scoreObject = GameObject.FindGameObjectWithTag("Score Text");
+
+        if (scoreObject)
+        {
+            scoreTransform = scoreObject.transform;
+            scoreTransform.GetComponent<Text>().text = score.ToString();
+        }
     }
 
     private void OnMainMenuScene()
     {
+        score = 0;
+        gameTime = 0f;
+        startTimer = 0.0f;
         sceneState = SceneState.Menu;
         audioSource.clip = menuAudio;
         audioSource.Play();
